@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'docker build -t abalone-age-prediction .'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                sh 'docker run -p 5000:5000 -d abalone-age-prediction'
+            }
+        }
+    }   
+}
